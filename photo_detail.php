@@ -16,7 +16,7 @@ define('SCRIPT','photo_detail');
 //引入公共文件
 require dirname(__FILE__).'/includes/common.inc.php';
 //评论
-if ($_GET['action'] == 'rephoto') {
+if (isset($_GET['action']) && $_GET['action'] == 'rephoto') {
 	_check_code($_POST['code'],$_SESSION['code']);
 	if (!!$_rows = _fetch_array("SELECT 
 																	tg_uniqid

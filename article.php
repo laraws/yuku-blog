@@ -8,6 +8,7 @@
 * Author: Lee
 * Date: 2010-8-23
 */
+error_reporting(E_ALL ^ E_NOTICE);
 session_start();
 //定义个常量，用来授权调用includes里面的文件
 define('IN_TG',true);
@@ -66,6 +67,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'rearticle') {
 			$_clean['title'] = $_POST['title'];
 			$_clean['content'] = $_POST['content'];
 			$_clean['username'] = $_COOKIE['username'];
+            $_clean['date'] = (new \DateTime())->format('Y-m-d H:i:s');
 			$_clean = _mysql_string($_clean);
 			//写入数据库
 			_query("INSERT INTO tg_article (
@@ -82,7 +84,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'rearticle') {
 												 					'{$_clean['title']}',
 												 					'{$_clean['type']}',
 												 					'{$_clean['content']}',
-												 					NOW()
+												 					'{$_clean['date']}'
 												 				)"
 			);
 			if (_affected_rows() == 1) {
@@ -264,7 +266,7 @@ if (isset($_GET['id'])) {
 			<div class="user">
 				<span>
 					<?php 
-					if ($_SESSION['admin']) {
+					if (isset($_SESSION['admin'])) {
 						if (empty($_html['nice'])) {
 					?>
 					[<a href="article.php?action=nice&on=1&id=<?php echo $_html['reid']?>">设置精华</a>]
@@ -274,7 +276,9 @@ if (isset($_GET['id'])) {
 						}
 					}
 					?>
-					<?php echo $_html['subject_modify']?> 1#
+					<?php
+                    if (isset($_html['subject_modify'])) echo $_html['subject_modify'];
+                    ?> 1#
 				</span><?php echo $_html['username_subject']?> | 发表于：<?php echo $_html['date']?>
 			</div>
 			<h3>主题：<?php echo $_html['title']?> <img src="images/icon<?php echo $_html['type']?>.gif" alt="icon" /> <?php echo $_html['re']?></h3>
