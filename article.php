@@ -42,7 +42,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'nice' && isset($_GET['id']) &&
 	}
 }
 //处理回帖
-if ($_GET['action'] == 'rearticle') {
+if (isset($_GET['action']) && $_GET['action'] == 'rearticle') {
 	global $_system;
 	if (!empty($_system['code'])) {
 		_check_code($_POST['code'],$_SESSION['code']); //验证码判断

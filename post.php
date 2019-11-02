@@ -20,7 +20,7 @@ if (!isset($_COOKIE['username'])) {
 	_location('发帖前，必须登录','login.php');
 }
 //将帖子写入数据库
-if ($_GET['action'] == 'post') {
+if (isset($_GET['action']) && $_GET['action'] == 'post') {
 	_check_code($_POST['code'],$_SESSION['code']); //验证码判断
 	if (!!$_rows = _fetch_array("SELECT 
 																tg_uniqid,
