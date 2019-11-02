@@ -8,6 +8,9 @@
 * Author: Lee
 * Date: 2010-8-10
 */
+error_reporting(E_ALL ^ E_NOTICE);
+ini_set('error_reporting', E_STRICT);
+
 //防止恶意调用
 if (!defined('IN_TG')) {
 	exit('Access Defined!');
